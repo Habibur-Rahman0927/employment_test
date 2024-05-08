@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\UserTypeEnum;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
@@ -21,7 +22,15 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                if(Auth::check() && Auth::user()->user_type == UserTypeEnum::CUSTOMER->value){
+                    return redirect(RouteServiceProvider::HOME);
+                }
+                if(Auth::check() && Auth::user()->user_type == UserTypeEnum::VENDOR->value){
+                    return redirect('/vendor/dashboard');
+                }
+                if(Auth::check() && Auth::user()->user_type == UserTypeEnum::ADMIN->value){
+                    return redirect('/admin/dashboard');
+                }
             }
         }
 

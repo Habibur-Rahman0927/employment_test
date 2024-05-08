@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Vendor\VendorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +25,19 @@ Auth::routes();
 Route::get('/profile', [App\Http\Controllers\HomeController::class, 'index'])->name('profile');
 Route::get('/category', [App\Http\Controllers\HomeController::class, 'category'])->name('category');
 Route::get('/products', [App\Http\Controllers\HomeController::class, 'products'])->name('products');
+
+Route::middleware('guest')->group(function () {
+    Route::get('/admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
+    Route::get('/vendor/login', [VendorController::class, 'VendorLogin'])->name('vendor.login');
+});
+
+
+Route::middleware(['auth', 'user_type:admin'])->group(function(){
+    Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
+    Route::get('/admin/logout', [AdminController::class, 'AdminDestroy'])->name('admin.logout');
+});
+
+Route::middleware(['auth', 'user_type:vendor'])->group(function(){
+    Route::get('/vendor/dashboard', [VendorController::class, 'VendorDashboard'])->name('vendor.dashboard');
+    Route::get('/vendor/logout', [VendorController::class, 'VendorDestroy'])->name('vendor.logout');
+});

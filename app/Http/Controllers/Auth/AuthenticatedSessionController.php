@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\UserTypeEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
@@ -29,7 +30,19 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $url = '';
+        if($request->user()->user_type === UserTypeEnum::ADMIN->value){
+            $url = 'admin/dashboard';
+        }elseif($request->user()->user_type === UserTypeEnum::VENDOR->value){
+            $url = 'vendor/dashboard';
+        }elseif($request->user()->user_type === UserTypeEnum::CUSTOMER->value){
+            $url = '/dashboard';
+        }
+        $notification = array(
+            'message' => 'Login Successfully done!.',
+            'alert-type' => 'success',
+        );
+        return redirect()->intended($url)->with($notification);
     }
 
     /**
