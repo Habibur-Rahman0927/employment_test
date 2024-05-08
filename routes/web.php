@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Vendor\VendorController;
 use Illuminate\Support\Facades\Route;
@@ -16,11 +18,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [IndexController::class, 'index']);
 
-Auth::routes();
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [UserController::class, 'UserDashboard'])->name('dashboard');
+    // Route::post('/user/profile/store', [UserController::class, 'UserProfileStore']);
+    Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
+    Route::post('/user/update/password', [UserController::class, 'UserUpdatePassword'])->name('user.update.password');
+
+});
 
 Route::get('/profile', [App\Http\Controllers\HomeController::class, 'index'])->name('profile');
 Route::get('/category', [App\Http\Controllers\HomeController::class, 'category'])->name('category');
@@ -41,3 +48,7 @@ Route::middleware(['auth', 'user_type:vendor'])->group(function(){
     Route::get('/vendor/dashboard', [VendorController::class, 'VendorDashboard'])->name('vendor.dashboard');
     Route::get('/vendor/logout', [VendorController::class, 'VendorDestroy'])->name('vendor.logout');
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

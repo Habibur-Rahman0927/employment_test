@@ -37,4 +37,11 @@ interface IBaseRepository
      * @return void
      */
     public function delete(int $id): void;
+
+    /**
+     * @param string $fieldName
+     * @param int $id
+     * @return void
+     */
+    public function deleteAll(string $fieldName, mixed $id): void;
 }

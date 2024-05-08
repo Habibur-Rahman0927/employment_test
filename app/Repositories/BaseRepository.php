@@ -57,13 +57,23 @@ abstract class BaseRepository implements IBaseRepository
     }
 
     /**
+     * @param int $id
+     *
+     * @return void
+     */
+    public function delete(int $id): void
+    {
+        $model = $this->find($id);
+        $model->delete();
+    }
+    /**
      * @param mixed $id
      *
      * @return void
      */
-    public function delete($id): void
+    public function deleteAll(string $fieldName, mixed $id): void
     {
-        $model = $this->find($id);
+        $model = $this->model->where($fieldName, $id);
         $model->delete();
     }
 }

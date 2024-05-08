@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
                 'name' => 'Customer',
                 'email' => 'customer@gmail.com',
                 'password' => Hash::make('customer'),
-                'user_type' => UserTypeEnum::VENDOR->value,
+                'user_type' => UserTypeEnum::CUSTOMER->value,
                 'status' => UserStatusEnum::ACTIVE->value,
             ],
         ]);

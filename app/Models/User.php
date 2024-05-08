@@ -50,5 +50,9 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function createdBy()
+    {
+        return $this->hasOne(FileUpload::class, 'created_by');
+    }
 
 }
