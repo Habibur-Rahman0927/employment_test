@@ -4,7 +4,7 @@
             <h3 class="mb-0">Hello {{ Auth::user()->name }}</h3>
             <br>
             <img id="showImage" class="rounded avatar-lg mt-1"
-                src="{{ !empty($userData->createdBy->file_url) ? asset('') . $userData->createdBy->file_url : asset('upload\no_image.jpg') }}"
+                src="{{ !empty($userData->photo) ? asset('') . $userData->photo : asset('upload\no_image.jpg') }}"
                 alt="Card image cap" style="width: 120px; height:150px;">
         </div>
         <div class="card-body">

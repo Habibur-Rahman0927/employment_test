@@ -17,4 +17,4 @@ use Illuminate\Support\Facades\Route;
 
 // routes/file_upload.php
 
-Route::post('/upload-image', [FileUploadController::class, 'fileUpload'])->name('upload.image');
+Route::post('/upload-image', [FileUploadController::class, 'upload'])->name('upload.image');

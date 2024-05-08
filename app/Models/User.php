@@ -21,7 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'user_type'
+        'user_type',
+        'photo'
     ];
 
     /**
@@ -48,11 +49,6 @@ class User extends Authenticatable
     public function posts()
     {
         return $this->hasMany(Post::class);
-    }
-
-    public function createdBy()
-    {
-        return $this->hasOne(FileUpload::class, 'created_by');
     }
 
 }
