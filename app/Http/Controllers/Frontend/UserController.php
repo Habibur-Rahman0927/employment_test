@@ -17,7 +17,6 @@ class UserController extends Controller
 
     public function UserDashboard(Request $request){
         $userData = User::find(Auth::id());
-        // dd($userData->createdBy);
         return view('dashboard', compact('userData'));
     }
 
